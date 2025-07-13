@@ -87,9 +87,85 @@ const sendVerificationEmail = async (email, fullName, verificationToken) => {
   }
 };
 
+
+
+
+// 4. Send password reset email
+const sendPasswordResetEmail = async (email, resetToken) => {
+  const transporter = createTransporter();
+
+  const resetUrl = `${process.env.BASE_URL}/reset-password/${resetToken}`;
+
+  const mailOptions = {
+    from: `"EdTrack" <${process.env.EMAIL_FROM}>`,
+    to: email,
+    subject: 'Reset Your Password',
+    html: `
+      <div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif;">
+        <h2 style="color: #333;">Password Reset Request</h2>
+        <p>You requested a password reset. Click the button below to set a new password:</p>
+
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="${resetUrl}" 
+             style="background-color: #dc3545; color: white; padding: 12px 30px; 
+                    text-decoration: none; border-radius: 5px; display: inline-block;">
+            Reset Password
+          </a>
+        </div>
+
+        <p>If the button doesn't work, copy and paste this link into your browser:</p>
+        <p style="word-break: break-all; color: #dc3545;">${resetUrl}</p>
+
+        <p style="color: #666; font-size: 14px;">
+          This link expires in 1 hour. If you didn't request this, just ignore this email.
+        </p>
+
+        <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
+        <p style="color: #999; font-size: 12px;">
+          This email was sent by EdTrack. Please do not reply directly.
+        </p>
+      </div>
+    `,
+    text: `
+      You requested a password reset.
+
+      Reset your password here: ${resetUrl}
+
+      This link will expire in 1 hour.
+    `
+  };
+
+  try {
+    console.log('📤 Sending password reset email to:', email);
+    const info = await transporter.sendMail(mailOptions);
+    console.log(`✅ Password reset email sent: ${info.response}`);
+  } catch (error) {
+    console.error('❌ Error sending password reset email:', error);
+    throw new Error('Could not send password reset email');
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Export functions
 module.exports = {
   createTransporter,
   generateVerificationToken,
-  sendVerificationEmail
+  sendVerificationEmail,
+  sendPasswordResetEmail
 };

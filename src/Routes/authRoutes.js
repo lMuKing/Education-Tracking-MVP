@@ -43,4 +43,16 @@ router.get('/google/failure', (req, res) => {
   res.status(400).json({ message: 'Google login failed Account already exists' });
 });
 
+
+router.post('/forgot-password',  authController.forgotPassword);
+router.post('/reset-password/:token',  authController.resetPassword);
+
+
+
+
+
+
+
+
+
 module.exports = router;

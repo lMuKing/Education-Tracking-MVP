@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const secretKey = process.env.JWT_SECRET;
 const { generateVerificationToken, sendVerificationEmail } = require('../utils/sendEmail'); // STEP 2: Import email utilities
+const { sendPasswordResetEmail } = require('../utils/sendEmail');
 
 
 
@@ -165,6 +166,9 @@ exports.verifyEmail = async (req, res) => {
 
 // Resends a new verification email if the user hasn’t verified their account yet.
 
+
+
+
 exports.resendVerificationEmail = async (req, res) => {
   try {
     const { email } = req.body; // Extracts the email from the request body — user input from a form or frontend
@@ -201,3 +205,42 @@ exports.resendVerificationEmail = async (req, res) => {
 
 
 
+
+
+exports.forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) return res.status(404).json({ msg: 'User not found' });
+
+  const token = crypto.randomBytes(32).toString('hex');
+  user.reset_Password_Token = token;
+  user.reset_Password_expires_at = Date.now() + 3600000;
+  await user.save();
+
+  const resetURL = `${process.env.BASE_URL}/reset-password/${token}`;
+  await sendPasswordResetEmail(email, 'Reset your password', `Reset Link: ${resetURL}`);
+
+  res.json({ msg: 'Reset link sent to email', token });
+};
+
+
+exports.resetPassword = async (req, res) => {
+  const { token } = req.params;
+  const { newPassword } = req.body;
+
+  const user = await User.findOne({
+    reset_Password_Token: token,
+    reset_Password_expires_at: { $gt: Date.now() }
+  });
+
+  if (!user) return res.status(400).json({ msg: 'Invalid or expired token' });
+
+
+
+  user.password = await bcrypt.hash(newPassword, 12);
+  user.reset_Password_Token = undefined;
+  user.reset_Password_expires_at = undefined;
+  await user.save();
+
+  res.json({ msg: 'Password has been reset successfully' });
+};

@@ -5,6 +5,9 @@ const express = require('express');
 
 const connectDB = require('./Config/database');
 
+require('./Config/passport');
+
+
 require('dotenv').config();
 
 const app = express();
@@ -27,6 +30,10 @@ app.use(express.urlencoded({ extended: true })); // This middleware parses incom
 app.get('/', (req, res) => { // homepage
   res.json({ message: 'API is running' });
 });
+
+const passport = require('passport');
+
+app.use(passport.initialize());
 
 const authRoutes = require('./Routes/authRoutes');
 app.use('/api/auth', authRoutes);

@@ -75,11 +75,11 @@ const user = new mongoose.Schema({
     default: false,
     required: true, // NOT NULL
   },
-  reset_code: {
+  reset_Password_Token: {
     type: String,
     default: null
   },
-  reset_code_expires_at: {
+  reset_Password_expires_at: {
     type: Date,
     default: null
   }

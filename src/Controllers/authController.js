@@ -86,11 +86,12 @@ exports.login = async (req, res) => {
 
  // 1. Check user
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ msg: 'Invalid email or password' });
+    if (!user) return res.status(400).json({ msg: 'Invalid email' });
 
 // 2. Check password
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ msg: 'Invalid email or password' });
+    if (!isMatch) return res.status(400).json({ msg: 'Invalid password' });
+
 
 // 3. Check Email_verification
     if (!user.is_email_verified) return res.status(403).json({ msg: 'Please verify your email first' });
@@ -105,7 +106,22 @@ exports.login = async (req, res) => {
       { expiresIn: '1d' }
     );
 
-    // 5. Return response
+
+    //  5. Set cookie 
+    res.cookie('jwt', token, {
+      httpOnly: true,       // Prevent JavaScript access (XSS protection)
+      secure: false,         // Only send cookie over HTTPS
+      sameSite: 'Lax',       // Block cross-site sending (CSRF protection)
+      maxAge: 24 * 60 * 60 * 1000 // 1 day
+    });
+
+    // this will Send the JWT token securely as a cookie to the client (Postman or browser).
+    // So Postman/browser will automatically save it
+
+
+
+
+    // . Return response
     res.status(200).json({
       msg: 'Login successful',
       token,
@@ -225,7 +241,7 @@ exports.forgotPassword = async (req, res) => {
 
 
 exports.resetPassword = async (req, res) => {
-  const { token } = req.params;
+  const { token } = req.params;    // resetPassword/abc123(Token) INSTEAD OF verify-email?token=abc123
   const { newPassword } = req.body;
 
   const user = await User.findOne({

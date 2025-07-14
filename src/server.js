@@ -24,6 +24,12 @@ app.use(express.json());  // This middleware parses incoming JSON data from the 
 
 app.use(express.urlencoded({ extended: true })); // This middleware parses incoming HTML data from the request body and converts it into a JavaScript object.
 
+// Load cookie-parser BEFORE routes
+
+const cookieParser = require('cookie-parser');
+app.use(cookieParser()); // this Read cookies sent by Postman/browser on future requests
+
+
 
 // Routes
 
@@ -31,12 +37,22 @@ app.get('/', (req, res) => { // homepage
   res.json({ message: 'API is running' });
 });
 
-const passport = require('passport');
 
+// Auth Routes
+const passport = require('passport');
 app.use(passport.initialize());
+
 
 const authRoutes = require('./Routes/authRoutes');
 app.use('/api/auth', authRoutes);
+
+
+// Admin Routes :
+
+const AdminRoutes = require('./Routes/adminRoutes');
+app.use('/api/admin',AdminRoutes);
+
+
 
 
 

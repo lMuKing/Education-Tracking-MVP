@@ -1,4 +1,7 @@
 
+
+const mongoose = require('mongoose');
+
 // Sessions Schema
 const session = new mongoose.Schema({
   title: {
@@ -12,22 +15,17 @@ const session = new mongoose.Schema({
   mentor_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
-  },
-    student_id: { 
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+    required: false
   },
   reviews:{
     type: Number,
     default: 1,
-    required: true
+    required: false
   },
   max_students: {
     type: Number,
-    default: 1,
-    required: true
+    default: 0,
+    required: false
   },
   current_enrolled_count: {
     type: Number,
@@ -35,28 +33,28 @@ const session = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['active', 'completed', 'cancelled'],
-    default: 'active'
+    enum: ['Pending','active', 'completed', 'cancelled'],
+    default: 'Pending'
   },
   timezone: {
     type: String,
-    required: true
+    required: false
   },
   meeting_schedule: {
     type: Date,
-    required: true
+    required: false
   },
   meeting_platform: {
     type: String,
-    required: true
+    required: false
   },
   meeting_link: {
     type: String,
-    required: true
+    required: false
   },
   duration: {
-    type: Number, // in minutes
-    required: true
+    type: Number, // in Days
+    required: false
   }
 }, {
   timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }

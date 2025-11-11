@@ -16,32 +16,10 @@
 - [Project Overview](#-project-overview)
 - [Features](#-features)
 - [Tech Stack](#-tech-stack)
-- [Repository Structure](#-repository-structure)
 - [Prerequisites](#-prerequisites)
 - [Installation](#-installation)
 - [Configuration](#-configuration)
 - [Running the Application](#-running-the-application)
-- [API Documentation](#-api-documentation)
-
----
-
-## 🏗 Project Overview
-
-EdTrack is a containing both backend and frontend applications:
-
-### **📂 Backend (`/server`)**
-- RESTful API built with Node.js, Express, and MongoDB
-- Handles authentication, authorization, and data management
-- Manages file uploads with Cloudinary
-- Provides secure endpoints for all platform operations
-- **[View Backend Documentation](./README.md#backend-specific-documentation)**
-
-### **🎨 Frontend (`/client`)**
-- Modern React application with Vite and TailwindCSS
-- Responsive UI for Admin, Mentor, and Student roles
-- Real-time updates and toast notifications
-- Image upload with drag & drop support
-- **[View Frontend Documentation](./client/README.md)**
 
 ---
 
@@ -161,27 +139,7 @@ Before you begin, ensure you have the following installed:
 
 ## 🚀 Installation
 
-### **Full Stack Setup (Recommended)**
 
-#### 1. Clone the Repository
-```bash
-git clone https://github.com/lMuKing/Education-Tracking-MVP.git
-cd Education-Tracking-MVP
-```
-
-#### 2. Install Backend Dependencies
-```bash
-cd server
-npm install
-```
-
-#### 3. Install Frontend Dependencies
-```bash
-cd ../client
-npm install
-```
-
-#### 4. Configure Environment Variables
 
 **Backend** (`/server/.env`):
 ```env
@@ -336,84 +294,6 @@ http://localhost:3000/api
 
 
 
----
-
-## 🔒 Security Features
-
-### **Implemented Security Measures:**
-
-1. **Authentication**
-   - JWT tokens with secure secrets
-   - Password hashing with bcrypt (10 rounds)
-   - Google OAuth 2.0 integration
-
-2. **Authorization**
-   - Role-based access control (RBAC)
-   - Route protection with middleware
-   - User-specific resource access
-
-3. **Input Validation**
-   - Express-validator for request validation
-   - Mongoose schema validation
-   - File type and size validation
-
-4. **Rate Limiting**
-   - API rate limiting with express-rate-limit
-   - Protects against brute force attacks
-
-5. **Security Headers**
-   - Helmet.js for HTTP security headers
-   - CORS configuration
-
-6. **File Upload Security**
-   - File type restrictions (jpg, jpeg, png only)
-   - File size limits (1MB per image, max 4 images)
-   - Secure Cloudinary storage
-
----
-
-
-
-## 📊 Database Schema
-
-### **Key Collections:**
-
-- **users** - All users (Admin, Mentor, Student)
-- **sessions** - Educational sessions/classes
-- **courses** - Courses within sessions
-- **homework** - Homework assignments
-- **homeworkenrollments** - Student submissions
-- **courseenrollments** - Course enrollments
-- **sessionenrollments** - Session enrollments
-- **announcements** - Course announcements
-- **requests** - Mentor join requests
-- **srequests** - Student join requests
-
----
-
-## 👥 User Roles
-
-### **Admin**
-- Full platform access
-- Create/manage sessions
-- Approve mentor/student requests
-- View platform statistics
-
-### **Mentor**
-- Create/manage courses and homework
-- View student submissions
-- Grade homework
-- Post announcements
-- Must be approved by admin
-
-### **Student**
-- Enroll in courses
-- Submit homework
-- View grades and feedback
-- Must be approved by admin
-
----
-
 
 ## 👨‍💻 Authors
 
@@ -421,87 +301,6 @@ http://localhost:3000/api
 
 ---
 
-
-## 🎯 Quick Start Commands
-
-### **Full Stack Development**
-
-```bash
-# Clone repository
-git clone https://github.com/lMuKing/Education-Tracking-MVP.git
-cd Education-Tracking-MVP
-
-# Setup Backend
-cd server
-npm install
-cp .env.example .env
-# Edit .env with your credentials
-npm run dev
-
-# In a new terminal - Setup Frontend
-cd ../client
-npm install
-cp .env.example .env
-# Edit .env with your API URL
-npm run dev
-```
-
-### **Backend Only**
-
-```bash
-cd server
-npm install
-cp .env.example .env
-npm run dev          # Development
-npm start            # Production
-```
-
-### **Frontend Only**
-
-```bash
-cd client
-npm install
-cp .env.example .env
-npm run dev          # Development
-npm run build        # Build for production
-npm run preview      # Preview production build
-```
-
-
-## 🚀 Deployment
-
-### **Backend Deployment**
-See [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md) for detailed backend deployment instructions:
-- DigitalOcean App Platform (Recommended)
-- DigitalOcean Droplet (VPS)
-- Heroku, Railway, Render, AWS EC2
-
-### **Frontend Deployment**
-See [Frontend README](./client/README.md#-deployment) for frontend deployment:
-- Vercel (Recommended - One-click deploy)
-- Netlify
-- DigitalOcean App Platform
-- Any static hosting service
-
-
-
-## 📖 Documentation
-
-- **[Backend API Documentation](./README.md#-api-documentation)** - Complete API endpoints reference
-- **[Frontend Documentation](./client/README.md)** - React app setup and features
-- **[Deployment Guide](./DEPLOYMENT_GUIDE.md)** - Production deployment instructions
-
----
-
-## 🔗 Related Links
-
-- **Repository**: [GitHub](https://github.com/lMuKing/Education-Tracking-MVP)
-- **Frontend Documentation**: [Client README](./client/README.md)
-- **Deployment Guide**: [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)
-- **Issues**: [Report Bug](https://github.com/lMuKing/Education-Tracking-MVP/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/lMuKing/Education-Tracking-MVP/discussions)
-
----
 
 <div align="center">
 

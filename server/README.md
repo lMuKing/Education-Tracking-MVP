@@ -239,40 +239,6 @@ http://localhost:3000/api
 
 ---
 
-## 🔒 Security Features
-
-### **Implemented Security Measures:**
-
-1. **Authentication**
-   - JWT tokens with secure secrets
-   - Password hashing with bcrypt (10 rounds)
-   - Google OAuth 2.0 integration
-
-2. **Authorization**
-   - Role-based access control (RBAC)
-   - Route protection with middleware
-   - User-specific resource access
-
-3. **Input Validation**
-   - Express-validator for request validation
-   - Mongoose schema validation
-   - File type and size validation
-
-4. **Rate Limiting**
-   - API rate limiting with express-rate-limit
-   - Protects against brute force attacks
-
-5. **Security Headers**
-   - Helmet.js for HTTP security headers
-   - CORS configuration
-
-6. **File Upload Security**
-   - File type restrictions (jpg, jpeg, png only)
-   - File size limits (1MB per image, max 4 images)
-   - Secure Cloudinary storage
-
----
-
 
 
 ## 📊 Database Schema

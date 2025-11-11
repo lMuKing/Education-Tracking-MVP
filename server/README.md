@@ -332,20 +332,7 @@ http://localhost:3000/api
 ---
 
 
-## 🗺 Roadmap
 
-### **Planned Features:**
-
-- [ ] Real-time messaging between mentors and students
-- [ ] Video lecture uploads and streaming
-- [ ] Quiz system with automatic grading
-- [ ] Progress tracking dashboard
-- [ ] Mobile app (React Native)
-- [ ] Push notifications
-- [ ] Advanced analytics and reports
-- [ ] Certificate generation
-- [ ] Payment integration for premium courses
----
 
 ## 🎯 Quick Start Commands
 

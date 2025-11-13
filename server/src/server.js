@@ -24,6 +24,7 @@ connectDB();
 const allowedOrigins = [
   'http://localhost:3000', 
   'http://localhost:5173',
+  'https://vedcets-e-learn.netlify.app',
   process.env.FRONTEND_URL // Your production frontend URL
 ].filter(Boolean); // Remove undefined values
 

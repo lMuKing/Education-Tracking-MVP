@@ -118,7 +118,7 @@ exports.sessionUpdate = async (req,res) =>{
 
 try{
 
-const { max_students, status, meeting_schedule, meeting_platform, meeting_link, session_category } = req.body;
+const { max_students, status, meeting_schedule, meeting_platform, meeting_link, session_category, duration } = req.body;
 const session_id = req.params.sessionId;
  if (!session_id) return res.status(400).json({ msg: 'ID is required' });
 
@@ -136,6 +136,7 @@ const session_id = req.params.sessionId;
     session.meeting_platform=meeting_platform;
     session.meeting_link=meeting_link;
     if (session_category !== undefined) session.session_category = session_category;
+    if (duration !== undefined) session.duration = duration;
     await session.save();
     
     res.status(200).json({
@@ -149,7 +150,8 @@ const session_id = req.params.sessionId;
     meeting_schedule:session.meeting_schedule,
     meeting_platform:session.meeting_platform,
     meeting_link:session.meeting_link,
-    session_category: session.session_category
+    session_category: session.session_category,
+    duration: session.duration
 
 
  } });

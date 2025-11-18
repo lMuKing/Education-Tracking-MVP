@@ -14,7 +14,8 @@ const UpdateSession = () => {
     status: 'pending',
     meeting_schedule: '',
     meeting_platform: '',
-    meeting_link: ''
+    meeting_link: '',
+    duration: ''
   });
 
   useEffect(() => {
@@ -50,7 +51,8 @@ const UpdateSession = () => {
           ? new Date(session.meeting_schedule).toISOString().slice(0, 16) 
           : '',
         meeting_platform: session.meeting_platform || '',
-        meeting_link: session.meeting_link || ''
+        meeting_link: session.meeting_link || '',
+        duration: session.duration || ''
       });
     }
   };
@@ -88,7 +90,8 @@ const UpdateSession = () => {
         status: 'pending',
         meeting_schedule: '',
         meeting_platform: '',
-        meeting_link: ''
+        meeting_link: '',
+        duration: ''
       });
     } catch (error) {
       console.error('Update session error:', error);
@@ -220,6 +223,20 @@ const UpdateSession = () => {
                     placeholder="https://..."
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                </div>
+
+                {/* Duration */}
+                <div className="mb-6">
+                  <label className="block text-gray-700 font-semibold mb-2">Duration (in Days)</label>
+                  <input
+                    type="number"
+                    value={formData.duration}
+                    onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
+                    placeholder="e.g., 30"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    min="1"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">Duration of the session in days</p>
                 </div>
 
                 {/* Submit Button */}

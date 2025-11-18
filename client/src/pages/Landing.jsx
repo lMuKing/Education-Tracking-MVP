@@ -65,7 +65,7 @@ const Landing = () => {
             category: session.session_category || 'Uncategorized', // Use session_category from backend
             status: session.status,
             mentor: session.mentor_name || session.mentor_id?.full_name || 'TBD',
-            duration: session.duration ? `${session.duration} hours` : 'N/A'
+            duration: session.duration ? `${session.duration} days` : 'N/A'
           };
         });
         
@@ -354,7 +354,7 @@ const Landing = () => {
                     <p className="text-gray-400 mb-6">Try searching with different keywords</p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8 items-start">
                     {courses
                       .filter(course => {
                         if (!searchTerm) return true;
@@ -370,7 +370,7 @@ const Landing = () => {
                       return (
                     <div 
                       key={course.id} 
-                      className={`${cardBg} rounded-2xl shadow-lg p-6 flex flex-col justify-between transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-2`}
+                      className={`${cardBg} rounded-2xl shadow-lg p-6 flex flex-col transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-2`}
                       style={{
                         animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
                       }}

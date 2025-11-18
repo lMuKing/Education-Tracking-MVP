@@ -33,7 +33,7 @@ const generateVerificationToken = () => {
 const sendVerificationEmail = async (email, fullName, verificationToken) => {
   const transporter = createTransporter();
 
-  const verificationUrl = `${process.env.BACKEND_URL}/verify-email?token=${verificationToken}`;
+  const verificationUrl = `${process.env.BACKEND_URL}/api/auth/verify-email?token=${verificationToken}`;
 
   const mailOptions = {
     from: `"EdTrack" <${process.env.EMAIL_FROM}>`,
@@ -79,11 +79,22 @@ const sendVerificationEmail = async (email, fullName, verificationToken) => {
 
   try {
     console.log('📤 Attempting to send email to:', email);
+    console.log('📧 Email config:', {
+      from: process.env.EMAIL_FROM,
+      hasPassword: !!process.env.EMAIL_PASSWORD,
+      backendUrl: process.env.BACKEND_URL
+    });
     const info = await transporter.sendMail(mailOptions);
     console.log(`✅ Verification email sent: ${info.response}`);
+    return info;
   } catch (error) {
-    console.error('❌ Error sending verification email:', error);
-    throw new Error('Could not send verification email');
+    console.error('❌ Error sending verification email:');
+    console.error('Error details:', {
+      message: error.message,
+      code: error.code,
+      command: error.command
+    });
+    throw new Error(`Could not send verification email: ${error.message}`);
   }
 };
 

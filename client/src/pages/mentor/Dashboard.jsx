@@ -59,24 +59,17 @@ const Dashboard = () => {
         <div className="max-w-7xl mx-auto">
           {/* Welcome Section */}
           <div className="mb-8">
-            <div className="flex items-center gap-4 mb-6">
-              <img
-                src={mentor?.profile_image_url || '/default-avatar.png'}
-                alt="avatar"
-                className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-4 border-blue-400 shadow-lg"
-              />
-              <div>
-                <h1 className={`text-2xl md:text-3xl font-bold ${
-                  isDarkMode ? 'text-white' : 'text-gray-900'
-                }`}>
-                  Welcome back, {mentor?.full_name || 'Mentor'}! 👋
-                </h1>
-                <p className={`${
-                  isDarkMode ? 'text-blue-200' : 'text-gray-600'
-                }`}>
-                  Manage your sessions and students
-                </p>
-              </div>
+            <div className="mb-6">
+              <h1 className={`text-2xl md:text-3xl font-bold ${
+                isDarkMode ? 'text-white' : 'text-gray-900'
+              }`}>
+                Welcome back, {mentor?.full_name || 'Mentor'}! 👋
+              </h1>
+              <p className={`${
+                isDarkMode ? 'text-blue-200' : 'text-gray-600'
+              }`}>
+                Manage your sessions and students
+              </p>
             </div>
           </div>
 

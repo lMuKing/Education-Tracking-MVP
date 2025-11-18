@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { User, Mail, Phone, Calendar, Shield, Camera, Save, Edit3, ArrowLeft } from 'lucide-react';
+import { User, Mail, Phone, Calendar, Shield, Save, Edit3, ArrowLeft } from 'lucide-react';
 import { studentAPI } from '../../api/student';
 import StudentNavbar from '../../components/student/StudentNavbar';
 import { useAuth } from '../../context/AuthContext';
@@ -94,16 +94,6 @@ const Profile = () => {
     }
   };
 
-  const handleImageUpdate = async (imageUrl) => {
-    try {
-      await studentAPI.updateProfileImage(imageUrl);
-      toast.success('Profile image updated successfully');
-      fetchProfile(); // Refresh profile data
-    } catch (error) {
-      toast.error('Failed to update profile image');
-    }
-  };
-
   if (loading) {
     return (
       <div className={`min-h-screen flex items-center justify-center ${
@@ -165,7 +155,7 @@ const Profile = () => {
                 isDarkMode ? 'bg-white/10 backdrop-blur-sm border border-white/20' : 'bg-white'
               }`}>
                 <div className="text-center">
-                  <div className="relative inline-block">
+                  <div className="inline-block">
                     {profile.profile_image_url ? (
                       <img
                         src={profile.profile_image_url}
@@ -179,15 +169,6 @@ const Profile = () => {
                         <User className={`w-12 h-12 ${isDarkMode ? 'text-white/50' : 'text-gray-400'}`} />
                       </div>
                     )}
-                    <button
-                      onClick={() => {
-                        const url = prompt('Enter image URL:');
-                        if (url) handleImageUpdate(url);
-                      }}
-                      className="absolute bottom-0 right-0 bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition-colors"
-                    >
-                      <Camera className="w-4 h-4" />
-                    </button>
                   </div>
                   
                   <h2 className={`text-xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>

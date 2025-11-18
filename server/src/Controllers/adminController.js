@@ -20,10 +20,11 @@ exports.FindUsers_All = async (req,res) => {
 
 try{
 
-    const users = await User.find();
+    // Only fetch users who have verified their email
+    const users = await User.find({ is_email_verified: true });
 
     if (!users || users.length === 0) {
-      return res.status(404).json({ msg: 'No users found' });
+      return res.status(404).json({ msg: 'No verified users found' });
     }
 
     const formattedUsers = users.map(user => ({ // Use .map() to format each user (return only needed fields).
@@ -35,7 +36,7 @@ try{
 
     
     res.status(200).json({
-      msg: 'Users found:',
+      msg: 'Verified users found:',
       users: formattedUsers
     });
 

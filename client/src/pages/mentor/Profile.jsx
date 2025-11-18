@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { mentorAPI } from '../../api/mentor';
 import toast from 'react-hot-toast';
-import { Mail, Phone, Calendar, User, Upload, Shield, CheckCircle, XCircle, Edit3, Save, ArrowLeft, Camera } from 'lucide-react';
+import { Mail, Phone, Calendar, User, Upload, Shield, CheckCircle, XCircle, Edit3, Save, ArrowLeft } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import AdminNavbar from '../../components/AdminNavbar';
 
@@ -129,16 +129,6 @@ const Profile = () => {
     }
   };
 
-  const handleImageUpdate = async (imageUrl) => {
-    try {
-      await mentorAPI.updateProfileImage(imageUrl);
-      toast.success('Profile image updated successfully');
-      fetchProfile();
-    } catch (error) {
-      toast.error('Failed to update profile image');
-    }
-  };
-
   if (loading) {
     return (
       <div className={`min-h-screen flex items-center justify-center ${
@@ -209,29 +199,12 @@ const Profile = () => {
                 isDarkMode ? 'bg-white/10 backdrop-blur-sm border border-white/20' : 'bg-white'
               }`}>
                 <div className="text-center">
-                  <div className="relative inline-block">
-                    {imagePreview || profile?.profile_image_url ? (
-                      <img
-                        src={imagePreview || profile?.profile_image_url}
-                        alt="Profile"
-                        className="w-24 h-24 rounded-full object-cover mx-auto mb-4"
-                      />
-                    ) : (
-                      <div className={`w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4 ${
-                        isDarkMode ? 'bg-white/20' : 'bg-gray-200'
-                      }`}>
-                        <User className={`w-12 h-12 ${isDarkMode ? 'text-white/50' : 'text-gray-400'}`} />
-                      </div>
-                    )}
-                    <button
-                      onClick={() => {
-                        const url = prompt('Enter image URL:');
-                        if (url) handleImageUpdate(url);
-                      }}
-                      className="absolute bottom-0 right-0 bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition-colors"
-                    >
-                      <Camera className="w-4 h-4" />
-                    </button>
+                  <div className="inline-block">
+                    <div className={`w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4 ${
+                      isDarkMode ? 'bg-white/20' : 'bg-gray-200'
+                    }`}>
+                      <User className={`w-12 h-12 ${isDarkMode ? 'text-white/50' : 'text-gray-400'}`} />
+                    </div>
                   </div>
                   
                   <h2 className={`text-xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>

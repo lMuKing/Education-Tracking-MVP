@@ -48,6 +48,7 @@ const session = new mongoose.Schema({
   },
   session_category: {
     type: String,
+    enum: ['Maths', 'Physics', 'Science', 'Arabic', 'English', 'French'],
     required: false,
     default: null
   },

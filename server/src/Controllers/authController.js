@@ -84,6 +84,7 @@ exports.login = async (req, res) => {
 
     const { email, password } = req.body;
 
+    
  // 1. Check user
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ msg: 'Invalid email' });
@@ -91,6 +92,7 @@ exports.login = async (req, res) => {
 // 2. Check password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: 'Invalid password' });
+
 
 
 // 3. Check Email_verification
@@ -168,10 +170,14 @@ exports.verifyEmail = async (req, res) => {
     user.email_verification_expires = undefined;
     await user.save(); // save changes
 
-    res.status(200).json({ msg: 'Email verified successfully! You can now login.' });
+    // Redirect to frontend success page
+    const frontendUrl = process.env.FRONTEND_URL || process.env.BASE_URL || 'http://localhost:3000';
+    return res.redirect(`${frontendUrl}/verify-email?status=success`);
 
   } catch (err) {
-    res.status(500).json({ msg: 'Email verification failed', error: err.message });
+    // Redirect to frontend error page
+    const frontendUrl = process.env.FRONTEND_URL || process.env.BASE_URL || 'http://localhost:3000';
+    return res.redirect(`${frontendUrl}/verify-email?status=error&message=${encodeURIComponent(err.message)}`);
   }
 };
 
@@ -181,8 +187,6 @@ exports.verifyEmail = async (req, res) => {
 // STEP 6: Resend Verification Email Controller of the Resend email verification route:
 
 // Resends a new verification email if the user hasn’t verified their account yet.
-
-
 
 
 exports.resendVerificationEmail = async (req, res) => {

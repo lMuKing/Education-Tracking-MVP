@@ -3,11 +3,13 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Search, Calendar, Users, BookOpen, Clock, CheckCircle, XCircle, AlertCircle, ArrowLeft } from 'lucide-react';
 import { studentAPI } from '../../api/student';
 import StudentNavbar from '../../components/student/StudentNavbar';
+import { useTheme } from '../../context/ThemeContext';
 import toast from 'react-hot-toast';
 
 const Sessions = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { isDarkMode } = useTheme();
   const [sessions, setSessions] = useState([]);
   const [myEnrollments, setMyEnrollments] = useState([]);
   const [myJoinRequests, setMyJoinRequests] = useState([]);
@@ -158,12 +160,12 @@ const Sessions = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className={`min-h-screen ${isDarkMode ? 'bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900' : 'bg-gray-50'}`}>
         <StudentNavbar />
         <div className="p-8 flex items-center justify-center">
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mb-4"></div>
-            <p className="text-xl text-gray-600">Loading sessions...</p>
+            <p className={`text-xl ${isDarkMode ? 'text-white' : 'text-gray-600'}`}>Loading sessions...</p>
           </div>
         </div>
       </div>
@@ -171,30 +173,30 @@ const Sessions = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={`min-h-screen ${isDarkMode ? 'bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900' : 'bg-gray-50'}`}>
       <StudentNavbar />
       <div className="p-8">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
             <Link
               to="/student/dashboard"
-              className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-4"
+              className={`inline-flex items-center gap-2 mb-4 ${isDarkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-700'}`}
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Dashboard
             </Link>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Available Sessions</h1>
-            <p className="text-gray-600">Browse and join sessions created by administrators</p>
+            <h1 className={`text-3xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Available Sessions</h1>
+            <p className={isDarkMode ? 'text-white/80' : 'text-gray-600'}>Browse and join sessions created by administrators</p>
           </div>
 
           {/* Search Bar */}
-          <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+          <div className={`rounded-lg shadow-md p-4 mb-6 ${isDarkMode ? 'bg-white/10 backdrop-blur-sm border border-white/20' : 'bg-white'}`}>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 ${isDarkMode ? 'text-white/50' : 'text-gray-400'}`} />
               <input
                 type="text"
                 placeholder="Search sessions by title or description..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDarkMode ? 'bg-white/5 border-white/20 text-white placeholder-white/50' : 'border-gray-300 text-gray-900'}`}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -203,38 +205,38 @@ const Sessions = () => {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className={`rounded-lg shadow-md p-6 ${isDarkMode ? 'bg-white/10 backdrop-blur-sm border border-white/20' : 'bg-white'}`}>
               <div className="flex items-center">
-                <div className="p-3 bg-blue-100 rounded-full">
+                <div className={`p-3 rounded-full ${isDarkMode ? 'bg-blue-500/20' : 'bg-blue-100'}`}>
                   <BookOpen className="w-6 h-6 text-blue-600" />
                 </div>
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Total Sessions</p>
-                  <p className="text-2xl font-bold text-gray-900">{sessions.length}</p>
+                  <p className={`text-sm font-medium ${isDarkMode ? 'text-white/70' : 'text-gray-600'}`}>Total Sessions</p>
+                  <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{sessions.length}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className={`rounded-lg shadow-md p-6 ${isDarkMode ? 'bg-white/10 backdrop-blur-sm border border-white/20' : 'bg-white'}`}>
               <div className="flex items-center">
-                <div className="p-3 bg-green-100 rounded-full">
+                <div className={`p-3 rounded-full ${isDarkMode ? 'bg-green-500/20' : 'bg-green-100'}`}>
                   <CheckCircle className="w-6 h-6 text-green-600" />
                 </div>
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Enrolled</p>
-                  <p className="text-2xl font-bold text-gray-900">{myEnrollments.length}</p>
+                  <p className={`text-sm font-medium ${isDarkMode ? 'text-white/70' : 'text-gray-600'}`}>Enrolled</p>
+                  <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{myEnrollments.length}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className={`rounded-lg shadow-md p-6 ${isDarkMode ? 'bg-white/10 backdrop-blur-sm border border-white/20' : 'bg-white'}`}>
               <div className="flex items-center">
-                <div className="p-3 bg-yellow-100 rounded-full">
+                <div className={`p-3 rounded-full ${isDarkMode ? 'bg-yellow-500/20' : 'bg-yellow-100'}`}>
                   <Clock className="w-6 h-6 text-yellow-600" />
                 </div>
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Pending Requests</p>
-                  <p className="text-2xl font-bold text-gray-900">
+                  <p className={`text-sm font-medium ${isDarkMode ? 'text-white/70' : 'text-gray-600'}`}>Pending Requests</p>
+                  <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                     {myJoinRequests.filter(r => r.isApproved === null || r.isApproved === undefined).length}
                   </p>
                 </div>
@@ -245,10 +247,10 @@ const Sessions = () => {
           {/* Sessions Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredSessions.length === 0 ? (
-              <div className="col-span-full text-center text-gray-500 py-12">
-                <BookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">No sessions available</h3>
-                <p className="text-gray-500 mb-4">Check back later for new sessions.</p>
+              <div className={`col-span-full text-center py-12 ${isDarkMode ? 'text-white/70' : 'text-gray-500'}`}>
+                <BookOpen className={`w-16 h-16 mx-auto mb-4 ${isDarkMode ? 'text-white/30' : 'text-gray-300'}`} />
+                <h3 className={`text-lg font-medium mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>No sessions available</h3>
+                <p className={isDarkMode ? 'text-white/70' : 'text-gray-500'}>Check back later for new sessions.</p>
               </div>
             ) : (
               filteredSessions.map((session) => {
@@ -256,7 +258,7 @@ const Sessions = () => {
                 const currentRequest = myJoinRequests.find(r => r.session_id?._id === session._id);
                 
                 return (
-                  <div key={session._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                  <div key={session._id} className={`rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow ${isDarkMode ? 'bg-white/10 backdrop-blur-sm border border-white/20' : 'bg-white'}`}>
                     {/* Session Image */}
                     {session.session_image && (
                       <div className="h-48 overflow-hidden">
@@ -270,7 +272,7 @@ const Sessions = () => {
                     
                     <div className="p-6">
                       <div className="flex justify-between items-start mb-3">
-                        <h3 className="text-xl font-bold text-gray-900 line-clamp-2">{session.title}</h3>
+                        <h3 className={`text-xl font-bold line-clamp-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{session.title}</h3>
                         <div className="flex flex-col items-end gap-1 ml-2">
                           <span className={`px-2 py-1 text-xs font-semibold rounded-full flex items-center gap-1 whitespace-nowrap ${
                             status.color === 'green' ? 'bg-green-100 text-green-800' :
@@ -289,9 +291,9 @@ const Sessions = () => {
                         </div>
                       </div>
                       
-                      <p className="text-gray-600 mb-4 line-clamp-3">{session.description}</p>
+                      <p className={`mb-4 line-clamp-3 ${isDarkMode ? 'text-white/80' : 'text-gray-600'}`}>{session.description}</p>
                       
-                      <div className="flex items-center gap-4 mb-4 text-sm text-gray-500">
+                      <div className={`flex items-center gap-4 mb-4 text-sm ${isDarkMode ? 'text-white/70' : 'text-gray-500'}`}>
                         <div className="flex items-center gap-1">
                           <Calendar className="w-4 h-4" />
                           <span>{session.start_date ? new Date(session.start_date).toLocaleDateString() : 'TBD'}</span>

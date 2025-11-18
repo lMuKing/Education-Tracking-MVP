@@ -1,6 +1,3 @@
-
-
-
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./Config/database');
@@ -53,7 +50,6 @@ app.use(express.urlencoded({ extended: true })); // This middleware parses incom
 
 const cookieParser = require('cookie-parser');
 app.use(cookieParser()); // this Read cookies sent by Postman/browser on future requests
-
 
 
 // Routes

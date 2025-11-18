@@ -62,7 +62,7 @@ export default function Signup() {
                 type="text"
                 {...register('full_name', { required: 'Full name is required' })}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
-                placeholder="John Doe"
+                placeholder=""
               />
             </div>
             {errors.full_name && (
@@ -87,7 +87,7 @@ export default function Signup() {
                   },
                 })}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
-                placeholder="you@example.com"
+                placeholder=""
               />
             </div>
             {errors.email && (
@@ -112,7 +112,7 @@ export default function Signup() {
                   },
                 })}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
-                placeholder="0501234567"
+                placeholder=""
               />
             </div>
             {errors.phone_number && (
@@ -141,7 +141,7 @@ export default function Signup() {
                   },
                 })}
                 className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
-                placeholder="••••••••"
+                
               />
               <button
                 type="button"
@@ -171,7 +171,7 @@ export default function Signup() {
                     value === password || 'Passwords do not match',
                 })}
                 className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
-                placeholder="••••••••"
+               
               />
               <button
                 type="button"

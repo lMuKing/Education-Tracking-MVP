@@ -72,12 +72,12 @@ const Landing = () => {
         setCourses(transformedCourses);
         
         // Use predefined categories
-        const predefinedCategories = ['Maths', 'Physics', 'Science', 'Arabic', 'English', 'French', 'Historic', 'Geographi'];
+        const predefinedCategories = ['Maths', 'Physics', 'Science', 'Arabic', 'English', 'French'];
         setCategories(predefinedCategories);
       } else {
         setCourses([]);
         // Still set predefined categories even if no courses
-        const predefinedCategories = ['Maths', 'Physics', 'Science', 'Arabic', 'English', 'French', 'Historic', 'Geographi'];
+        const predefinedCategories = ['Maths', 'Physics', 'Science', 'Arabic', 'English', 'French'];
         setCategories(predefinedCategories);
       }
     } catch (error) {
@@ -277,9 +277,6 @@ const Landing = () => {
       {/* Popular Courses */}
       <section id="courses" className="px-4 md:px-8 py-8 md:py-12">
         <h2 className={`text-3xl md:text-4xl font-bold text-center mb-6 md:mb-8 ${darkMode ? "text-white" : "text-[#ff6a2f]"}`}>Available Courses</h2>
-        <p className={`text-center mb-6 md:mb-8 px-4 ${darkMode ? "text-white" : "text-gray-600"}`}>
-          Discover courses created by our expert administrators
-        </p>
         
         {loading ? (
           <div className="flex justify-center items-center py-12">
@@ -471,6 +468,8 @@ const Landing = () => {
                 )}
               </>
             )}
+
+
           </>
         )}
       </section>
@@ -678,7 +677,7 @@ const Landing = () => {
           <div className={`pt-6 border-t ${darkMode ? 'border-white/10' : 'border-gray-200'}`}>
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <p className={`text-sm ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
-                © {new Date().getFullYear()} <a href="https://vedcets.dev/" target="_blank" rel="noopener noreferrer" className="font-semibold text-orange-500 hover:text-orange-600 transition-colors">Vedcets</a>. All rights reserved.
+                © {new Date().getFullYear()} <a href="https://mouadam.dev/" target="_blank" rel="noopener noreferrer" className="font-semibold text-orange-500 hover:text-orange-600 transition-colors">Mouad</a> , <a href="https://vedcets.dev/" target="_blank" rel="noopener noreferrer" className="font-semibold text-orange-500 hover:text-orange-600 transition-colors">Vedcets</a>. All rights reserved.
               </p>
               <div className="flex gap-6">
                 <a href="#" className={`text-sm ${darkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"} transition-colors`}>

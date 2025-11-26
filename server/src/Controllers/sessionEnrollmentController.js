@@ -196,11 +196,12 @@ exports.cancelJoinRequest = async (req, res) => {
       return res.status(404).json({ msg: 'Join request not found' });
     }
 
-    // Only allow canceling pending requests
-    if (joinRequest.status !== 'pending') {
+    // Only allow canceling pending requests (isApproved = null means pending)
+    if (joinRequest.isApproved !== null) {
+      const status = joinRequest.isApproved ? 'approved' : 'rejected';
       return res.status(400).json({ 
-        msg: `Cannot cancel a ${joinRequest.status} request`,
-        current_status: joinRequest.status
+        msg: `Cannot cancel a ${status} request`,
+        current_status: status
       });
     }
 

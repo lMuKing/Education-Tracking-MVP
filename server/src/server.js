@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 const connectDB = require('./Config/database');
+const logger = require('./Config/logger');
 
 require('./Config/passport');
 
@@ -16,6 +18,19 @@ connectDB();
 
 
 // Middleware
+
+// Security headers with Helmet
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https:"],
+    },
+  },
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+}));
 
 // CORS Configuration - MUST be before routes
 const allowedOrigins = [
@@ -51,6 +66,9 @@ app.use(express.urlencoded({ extended: true })); // This middleware parses incom
 const cookieParser = require('cookie-parser');
 app.use(cookieParser()); // this Read cookies sent by Postman/browser on future requests
 
+// Performance monitoring middleware
+const { performanceMonitor } = require('./Middleware/performanceMonitor');
+app.use(performanceMonitor);
 
 // Routes
 
@@ -123,12 +141,18 @@ app.use('/api/student/', homeworkEnrollementRoutes );
 
 
 
+// Error handling middleware (should be last)
+const errorHandler = require('./Middleware/errorHandler');
+app.use(errorHandler);
+
 // Start Server
 
 const PORT = process.env.PORT || 3000; // Uses .env value like PORT=5000 if it exists Otherwise defaults to 3000
 
 app.listen(PORT, () => {  // Starts the server and listens for requests on the chosen port.
-  console.log(`Server running on port ${PORT}`);
+  // Silent startup - logs written to file only
+  logger.debug(`Server running on port ${PORT}`);
+  logger.debug(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
 
 

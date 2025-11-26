@@ -4,6 +4,7 @@ const Request = require('../Models/requestModel');
 const Session = require('../Models/sessionModel');
 const Course = require('../Models/courseModel');
 const SessionEnrollment = require('../Models/sessionEnrollmentModel');
+const logger = require('../Config/logger');
 
 const secretKey = process.env.JWT_SECRET;
 
@@ -41,6 +42,11 @@ exports.protect = async (req, res, next) => {
     next();
     
   } catch (err) {
+    logger.warn('Authentication failed:', { 
+      error: err.message, 
+      ip: req.ip,
+      url: req.originalUrl 
+    });
     res.status(401).json({ 
       msg: 'Invalid or expired token', 
       error: err.message 

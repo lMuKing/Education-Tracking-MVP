@@ -3,6 +3,7 @@
 const dotenv = require('dotenv');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
+const logger = require('../Config/logger');
 
 // Load environment variables
 dotenv.config();
@@ -78,21 +79,16 @@ const sendVerificationEmail = async (email, fullName, verificationToken) => {
   };
 
   try {
-    console.log('📤 Attempting to send email to:', email);
-    console.log('📧 Email config:', {
-      from: process.env.EMAIL_FROM,
-      hasPassword: !!process.env.EMAIL_PASSWORD,
-      backendUrl: process.env.BACKEND_URL
-    });
+    logger.info('📤 Attempting to send verification email', { to: email });
     const info = await transporter.sendMail(mailOptions);
-    console.log(`✅ Verification email sent: ${info.response}`);
+    logger.info('✅ Verification email sent successfully', { messageId: info.messageId });
     return info;
   } catch (error) {
-    console.error('❌ Error sending verification email:');
-    console.error('Error details:', {
-      message: error.message,
+    logger.error('❌ Error sending verification email', {
+      error: error.message,
       code: error.code,
-      command: error.command
+      command: error.command,
+      to: email
     });
     throw new Error(`Could not send verification email: ${error.message}`);
   }
@@ -145,11 +141,11 @@ const sendPasswordResetEmail = async (email, resetToken) => {
   };
 
   try {
-    console.log('📤 Sending password reset email to:', email);
+    logger.info('📤 Sending password reset email', { to: email });
     const info = await transporter.sendMail(mailOptions);
-    console.log(`✅ Password reset email sent: ${info.response}`);
+    logger.info('✅ Password reset email sent successfully', { messageId: info.messageId });
   } catch (error) {
-    console.error('❌ Error sending password reset email:', error);
+    logger.error('❌ Error sending password reset email', { error: error.message, to: email });
     throw new Error('Could not send password reset email');
   }
 };

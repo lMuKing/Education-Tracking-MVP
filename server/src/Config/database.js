@@ -1,6 +1,7 @@
 
 
 const mongoose = require('mongoose'); // Import the Mongoose library (ODM)
+const logger = require('./logger');
 
 require('dotenv').config(); // Loads environment variables from .env file 
  
@@ -11,16 +12,14 @@ const connectDb = async () => { // we use Asynchronous function because we use i
 try{
 
 
-    const conn = await mongoose.connect(process.env.MONGO_URI,{
-      useNewUrlParser: true,    // Tells Mongoose to use the new versions of reading (Parse) the connection string (URI)
-      useUnifiedTopology: true,  // Tells Mongoose to use new topologies in connection
+    const conn = await mongoose.connect(process.env.MONGO_URI)
 
-    })
-
-    console.log('✅ MongoDB Connected');
+    // Silent connection - logs written to file only
+    logger.debug('✅ MongoDB Connected successfully');
+    logger.debug(`Database Host: ${conn.connection.host}`);
       
   } catch (error) {
-    console.error('Database connection failed:', error.message);
+    logger.error('❌ Database connection failed:', { error: error.message, stack: error.stack });
     process.exit(1);
   }
 };

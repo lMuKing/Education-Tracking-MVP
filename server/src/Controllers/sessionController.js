@@ -7,6 +7,7 @@ const SessionJoinRequest = require('../Models/sRequestModel');
 const SessionEnrollment = require('../Models/sessionEnrollmentModel');
 const CourseEnrollment = require('../Models/courseEnrollement');
 const Course = require('../Models/courseModel'); // Adjust the path if needed
+const { measureAsync } = require('../Middleware/performanceMonitor');
 
 
 // session management request:
@@ -211,10 +212,12 @@ exports.getAllsessions = async (req, res) => {
 // Browse all sessions in the system (for all users)
 exports.browseSessions = async (req, res) => {
   try {
-    // Get all sessions in the system
-    const sessions = await Session.find()
-      .populate('mentor_id', 'full_name email profile_image_url')
-      .sort({ created_at: -1 });
+    // Get all sessions in the system - wrapped in performance measurement
+    const sessions = await measureAsync('DB: Fetch all sessions with mentor populate', async () => {
+      return await Session.find()
+        .populate('mentor_id', 'full_name email profile_image_url')
+        .sort({ created_at: -1 });
+    });
 
     if (!sessions || sessions.length === 0) {
       return res.status(404).json({ msg: 'No sessions found' });

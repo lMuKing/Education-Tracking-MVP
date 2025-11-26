@@ -3,6 +3,7 @@ const User = require('../Models/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const logger = require('../Config/logger');
 const secretKey = process.env.JWT_SECRET;
 const { generateVerificationToken, sendVerificationEmail } = require('../utils/sendEmail'); // STEP 2: Import email utilities
 const { sendPasswordResetEmail } = require('../utils/sendEmail');
@@ -53,9 +54,9 @@ const{ full_name , email , password , passwordConfirm , phone_number } = req.bod
 // 6. Send verification email
     try {
       await sendVerificationEmail(email, full_name, emailToken); // STEP 4: Send email
-      console.log(` Verification email sent to ${email}`);
+      logger.info('✅ Verification email sent', { email, userId: user._id });
     } catch (emailError) {
-      console.error('Error sending verification email:', emailError);
+      logger.error('❌ Error sending verification email', { email, error: emailError.message });
       // Continue with user creation but inform about email issue
     }
 

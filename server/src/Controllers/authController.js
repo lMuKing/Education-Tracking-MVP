@@ -52,12 +52,22 @@ const{ full_name , email , password , passwordConfirm , phone_number } = req.bod
     });
 
 // 6. Send verification email in background (non-blocking)
+    logger.info('📧 Triggering background email send', { email, userId: user._id });
     sendVerificationEmail(email, full_name, emailToken)
-      .then(() => {
-        logger.info('✅ Verification email sent', { email, userId: user._id });
+      .then((info) => {
+        logger.info('✅ Verification email sent successfully', { 
+          email, 
+          userId: user._id,
+          messageId: info.messageId 
+        });
       })
       .catch((emailError) => {
-        logger.error('❌ Error sending verification email', { email, error: emailError.message });
+        logger.error('❌ Failed to send verification email', { 
+          email, 
+          userId: user._id,
+          error: emailError.message,
+          stack: emailError.stack 
+        });
       });
 
     // 7. Return success immediately (don't wait for email)

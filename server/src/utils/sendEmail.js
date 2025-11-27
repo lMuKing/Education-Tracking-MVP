@@ -16,11 +16,31 @@ const createTransporter = () => {
     throw new Error("❌ Missing EMAIL_FROM or EMAIL_PASSWORD in .env file");
   }
 
+  // Use custom SMTP settings if provided, otherwise use Gmail service
+  if (process.env.EMAIL_HOST && process.env.EMAIL_PORT) {
+    logger.info('📧 Using custom SMTP configuration', { 
+      host: process.env.EMAIL_HOST,
+      port: process.env.EMAIL_PORT 
+    });
+    
+    return nodemailer.createTransport({
+      host: process.env.EMAIL_HOST,
+      port: parseInt(process.env.EMAIL_PORT),
+      secure: process.env.EMAIL_PORT === '465', // true for 465, false for other ports
+      auth: {
+        user: process.env.EMAIL_FROM,
+        pass: process.env.EMAIL_PASSWORD
+      }
+    });
+  }
+  
+  // Fallback to Gmail service
+  logger.info('📧 Using Gmail service');
   return nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: process.env.EMAIL_FROM,      // your Gmail
-      pass: process.env.EMAIL_PASSWORD   // app password from Google
+      user: process.env.EMAIL_FROM,
+      pass: process.env.EMAIL_PASSWORD
     }
   });
 };

@@ -32,7 +32,7 @@ const{ full_name , email , password , passwordConfirm , phone_number } = req.bod
     if (password.length < 6) return res.status(400).json({ msg: 'Password too short' });
 
 // 3. Hash password
-    const hashedPassword = await bcrypt.hash(password, 12); // 12 is for strength
+    const hashedPassword = await bcrypt.hash(password, 10); // 10 rounds = faster, still secure
 
 // 4. Create email verification token 
 
@@ -51,17 +51,16 @@ const{ full_name , email , password , passwordConfirm , phone_number } = req.bod
       is_email_verified: false
     });
 
-// 6. Send verification email
-    try {
-      await sendVerificationEmail(email, full_name, emailToken); // STEP 4: Send email
-      logger.info('✅ Verification email sent', { email, userId: user._id });
-    } catch (emailError) {
-      logger.error('❌ Error sending verification email', { email, error: emailError.message });
-      // Continue with user creation but inform about email issue
-    }
+// 6. Send verification email in background (non-blocking)
+    sendVerificationEmail(email, full_name, emailToken)
+      .then(() => {
+        logger.info('✅ Verification email sent', { email, userId: user._id });
+      })
+      .catch((emailError) => {
+        logger.error('❌ Error sending verification email', { email, error: emailError.message });
+      });
 
-
-    // 7. Return success
+    // 7. Return success immediately (don't wait for email)
     res.status(201).json({ msg: 'User created successfully. Please verify your email.',
       user: {
         id: user._id,

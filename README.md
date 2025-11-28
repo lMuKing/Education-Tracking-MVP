@@ -67,14 +67,6 @@
 #### **Database**
 - **MongoDB** - NoSQL database
 
-#### **Authentication & Security**
-- **Passport.js** - Authentication middleware
-- **JWT** - JSON Web Tokens
-- **bcrypt.js** - Password hashing (10 rounds)
-- **Helmet** - Security headers
-- **express-rate-limit** - Rate limiting
-- **CORS** - Cross-Origin Resource Sharing
-
 #### **File Storage**
 - **Cloudinary** - Cloud-based image storage
 - **Multer** - File upload handling

@@ -48,15 +48,6 @@
 - Receive course announcements
 - View enrollment status
 
-### 🔐 **Authentication & Security**
-- JWT-based authentication
-- Google OAuth 2.0 integration
-- Email verification system
-- Password reset functionality
-- Rate limiting protection
-- Helmet.js security headers
-- Role-based access control (Admin, Mentor, Student)
-
 ### 📤 **File Management**
 - Cloudinary integration for image storage
 - Image validation (format, size, count limits)
